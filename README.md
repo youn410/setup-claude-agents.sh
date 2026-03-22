@@ -1,0 +1,1 @@
+# setup-claude-agents.sh
