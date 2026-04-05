@@ -23,7 +23,9 @@ cat > .claude/settings.json <<'EOF'
       "Bash(mvn test:*)",
       "Bash(mvn verify:*)",
       "Bash(gradle test:*)",
-      "Bash(./gradlew test:*)"
+      "Bash(./gradlew test:*)",
+      "WebSearch",
+      "WebFetch"
     ],
     "deny": [
       "Bash(sudo *)",
