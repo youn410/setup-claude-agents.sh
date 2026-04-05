@@ -15,6 +15,7 @@ cat > .claude/settings.json <<'EOF'
       "Bash(mkdir:*)",
       "Bash(grep:*)",
       "Bash(cat:*)",
+      "Bash(ls:*)",
       "Bash(python -m pytest:*)",
       "Bash(python3 -m pytest:*)",
       "Bash(python -m unittest:*)",
@@ -28,7 +29,8 @@ cat > .claude/settings.json <<'EOF'
       "Bash(./gradlew test:*)",
       "Bash(git:*)",
       "WebSearch",
-      "WebFetch"
+      "WebFetch",
+      "Search(**)"
     ],
     "deny": [
       "Bash(sudo *)",
