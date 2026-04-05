@@ -7,9 +7,10 @@ cat > .claude/settings.json <<'EOF'
 {
   "permissions": {
     "allow": [
-      "Write(**)",
-      "Edit(**)",
-      "MultiEdit(**)",
+      "Read(.**)",
+      "Write(.**)",
+      "Edit(.**)",
+      "MultiEdit(.**)",
       "Agent(*)",
       "Bash(mkdir:*)",
       "Bash(python -m pytest:*)",
@@ -23,6 +24,24 @@ cat > .claude/settings.json <<'EOF'
       "Bash(mvn verify:*)",
       "Bash(gradle test:*)",
       "Bash(./gradlew test:*)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -rf *)",
+      "Bash(git reset *)",
+      "Bash(git rebase *)",
+      "Bash(wget *)",
+      "Read(**/.env)",
+      "Read(~/.ssh/*)",
+      "Write(**/.env)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(mv *)",
+      "Bash(curl *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
