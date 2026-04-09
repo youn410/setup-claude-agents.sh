@@ -155,6 +155,7 @@ SKIPPED は PASSED と同様に扱う。
 - 修正・機能追加は必ず新しいブランチを切ってそこに commit する
 - main の更新は Pull Request 経由で行う
 - ブランチ名は `feat/`, `fix/`, `chore/` 等のプレフィックスを使う
+- `package.json`、`pyproject.toml`、`Cargo.toml` 等のバージョンフィールドも必要に応じて更新する
 EOF
 
 
@@ -638,6 +639,7 @@ main ブランチ上で作業している場合は commit せず、適切なブ�
 - commit message は簡潔で意味が明確であること
 - 変更の主目的が分かること
 - 無関係なファイルが混ざっていないことを確認する
+- `package.json`、`pyproject.toml`、`Cargo.toml` 等のバージョンフィールドが更新されているか確認する
 - 失敗時は何が不足しているかを明記する
 
 ## Push Rules
