@@ -148,6 +148,13 @@ SKIPPED は PASSED と同様に扱う。
 - 失敗したテストや不明点は隠さず報告する
 - レビュー担当は自分で修正せず、差し戻しを行う
 - Claude は team-lead として編集系ツールを使わない
+
+## Git Rules
+
+- **main ブランチには直接 commit しない**
+- 修正・機能追加は必ず新しいブランチを切ってそこに commit する
+- main の更新は Pull Request 経由で行う
+- ブランチ名は `feat/`, `fix/`, `chore/` 等のプレフィックスを使う
 EOF
 
 
@@ -618,6 +625,9 @@ tools: Read, Bash, Grep, Glob
 - security-reviewer = APPROVED
 - integration-tester = PASSED or SKIPPED
 - ui-tester = PASSED or SKIPPED
+- **現在のブランチが main ではないこと**（main への直接 commit 禁止）
+
+main ブランチ上で作業している場合は commit せず、適切なブランチを作成してから作業するよう Claude に報告する。
 
 ## Skip Rule
 
