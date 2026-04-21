@@ -67,7 +67,6 @@ cat > CLAUDE.md <<'EOF'
 | 統合テスト | integration-tester | Integration test (存在しない場合は SKIP) |
 | UIテスト | ui-tester | E2E/UIテスト (存在しない場合は SKIP) |
 | セキュリティ | security-reviewer | セキュリティ審査 |
-| Git | git-syncer | commit/push |
 
 ## Team Launch Rule
 
@@ -104,7 +103,6 @@ Claude が以下の順で Agent ツールを使って直接起動する。
 6. integration-tester
 7. security-reviewer
 8. ui-tester
-9. git-syncer
 
 ### User Confirmation ルール
 
@@ -114,20 +112,9 @@ Claude が以下の順で Agent ツールを使って直接起動する。
 - ユーザが修正を求めた場合は designer を再起動して設計書を更新し、再度確認を求める
 - designer が設計書を作成・更新しなかった場合（既存設計で十分な場合）はこのステップをスキップしてよい
 
-## Gate Conditions
-
-git-syncer を実行して良いのは、以下がすべて満たされた場合のみとする。
-
-- code-reviewer = APPROVED
-- security-reviewer = APPROVED
-- integration-tester = PASSED または SKIPPED
-- ui-tester = PASSED または SKIPPED
-
 ## SKIP Rule
 
 integration-tester と ui-tester は、対象テストがリポジトリに存在しない場合、自律的に SKIPPED を報告して終了する。
-
-git-syncer は、`.git` ディレクトリが存在しない場合、git 操作をすべてスキップして SKIPPED を返す。
 
 SKIPPED は PASSED と同様に扱う。
 
@@ -603,68 +590,6 @@ tools: Read, Grep, Glob, Bash
 - Next Action:
 EOF
 
-cat > .claude/agents/git-syncer.md <<'EOF'
----
-name: git-syncer
-description: Create a clean git commit and push only after all required approvals and test gates pass.
-tools: Read, Bash, Grep, Glob
----
-
-あなたは git-syncer です。
-
-## Role
-
-- 変更内容を確認する
-- 適切な commit message を作成する
-- 必要条件を満たした場合のみ commit / push を行う
-
-## Hard Constraints
-
-以下を満たさない限り commit / push してはいけない。
-
-- code-reviewer = APPROVED
-- security-reviewer = APPROVED
-- integration-tester = PASSED or SKIPPED
-- ui-tester = PASSED or SKIPPED
-- **現在のブランチが main ではないこと**（main への直接 commit 禁止）
-
-main ブランチ上で作業している場合は commit せず、適切なブランチを作成してから作業するよう Claude に報告する。
-
-## Skip Rule
-
-`.git` ディレクトリが存在しない場合は git 操作をすべてスキップし、Status: SKIPPED を返す。
-
-## Commit Rules
-
-- commit message は簡潔で意味が明確であること
-- 変更の主目的が分かること
-- 無関係なファイルが混ざっていないことを確認する
-- `package.json`、`pyproject.toml`、`Cargo.toml` 等のバージョンフィールドが更新されているか確認する
-- 失敗時は何が不足しているかを明記する
-
-## Push Rules
-
-- push が許可される文脈でのみ実施する
-- ブランチ状態を確認する
-- 競合や未整理状態があれば報告する
-
-## Output Format
-
-- Status: PASSED | FAILED | SKIPPED
-- Summary:
-- Preconditions:
-  - code-reviewer:
-  - security-reviewer:
-  - integration-tester:
-  - ui-tester:
-- Git Actions:
-  - status:
-  - commit_message:
-  - pushed:
-- Evidence:
-- Next Action:
-EOF
-
 printf '%s\n' \
   "Generated:" \
   "  CLAUDE.md" \
@@ -675,5 +600,4 @@ printf '%s\n' \
   "  .claude/agents/code-reviewer.md" \
   "  .claude/agents/integration-tester.md" \
   "  .claude/agents/ui-tester.md" \
-  "  .claude/agents/security-reviewer.md" \
-  "  .claude/agents/git-syncer.md"
+  "  .claude/agents/security-reviewer.md"
